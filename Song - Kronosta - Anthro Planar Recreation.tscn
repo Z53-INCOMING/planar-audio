@@ -10,8 +10,11 @@
 [node name="Node2D" type="Node2D" unique_id=1248805522]
 script = ExtResource("1_36xda")
 tracks = Array[Texture2D]([ExtResource("2_23m8m"), ExtResource("4_00nv2"), ExtResource("5_akox3")])
+phase_tracks = null
 wavetable_tracks = Array[Texture2D]([ExtResource("6_hx1p2"), ExtResource("6_36xda"), ExtResource("6_hx1p2")])
 angle = 1.5699999999999998
+offset = null
+sample_rate = null
 seconds_in_a_pixel = 0.25
 octaves = 4.0
 lowest_frequency = 64.0
