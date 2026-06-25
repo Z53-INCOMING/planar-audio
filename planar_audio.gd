@@ -1,13 +1,13 @@
 class_name PlanarAudio extends Node2D
 
 @export var tracks: Array[Texture2D]
+@export var angle: float 	# where we're slicing
+@export var offset: Vector2 # offset in seconds
+@export var sample_rate := 44100.0
 
 func _ready():
 	var sound_file = FileAccess.open("res://song.raw", FileAccess.WRITE)
-	
-	# where we're slicing
-	var angle := 0.01
-	var offset := Vector2(1.0, 0.0) # offset in seconds
+
 	if offset.x < 0.0 or offset.y < 0.0:
 		print("offset must be greater than 0 in both axes")
 		return
@@ -30,7 +30,6 @@ func _ready():
 	var length := ray_start.distance_to(intersection)
 	
 	# loop setup
-	var sample_rate := 44100.0
 	
 	var amplitudes := PackedFloat32Array()
 	amplitudes.resize(tracks.size())
@@ -43,9 +42,11 @@ func _ready():
 		var sample := 0
 		
 		for t in track_images.size():
+			if ((time / seconds_in_a_pixel) * cos(angle)) + (offset.x / seconds_in_a_pixel) >= 16:
+				print(((time / seconds_in_a_pixel) * cos(angle)) + (offset.x / seconds_in_a_pixel))
 			var color := track_images[t].get_pixel(
-				int(((time / seconds_in_a_pixel) * cos(angle)) + (offset.x / seconds_in_a_pixel)),
-				int(((time / seconds_in_a_pixel) * sin(angle)) + (offset.y / seconds_in_a_pixel))
+				int(floor(((time / seconds_in_a_pixel) * cos(angle)) + (offset.x / seconds_in_a_pixel))),
+				int(floor(((time / seconds_in_a_pixel) * sin(angle)) + (offset.y / seconds_in_a_pixel)))
 			)
 			
 			if color != Color.BLACK:
