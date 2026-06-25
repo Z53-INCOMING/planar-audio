@@ -6,8 +6,8 @@ func _ready():
 	var sound_file = FileAccess.open("res://song.raw", FileAccess.WRITE)
 	
 	# where we're slicing
-	var angle := 0.0
-	var offset := Vector2.ZERO
+	var angle := 0.01
+	var offset := Vector2(1.0, 0.0) # offset in seconds
 	if offset.x < 0.0 or offset.y < 0.0:
 		print("offset must be greater than 0 in both axes")
 		return
@@ -44,8 +44,8 @@ func _ready():
 		
 		for t in track_images.size():
 			var color := track_images[t].get_pixel(
-				int(floor((time / seconds_in_a_pixel) + offset.x)) * cos(angle),
-				int(floor((time / seconds_in_a_pixel) + offset.y)) * sin(angle)
+				int(((time / seconds_in_a_pixel) * cos(angle)) + (offset.x / seconds_in_a_pixel)),
+				int(((time / seconds_in_a_pixel) * sin(angle)) + (offset.y / seconds_in_a_pixel))
 			)
 			
 			if color != Color.BLACK:
