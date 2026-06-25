@@ -6,6 +6,7 @@ class_name PlanarAudio extends Node2D
 @export var angle: float 	# where we're slicing
 @export var offset: Vector2 # offset in seconds
 @export var sample_rate := 44100.0
+@export var seconds_in_a_pixel := 1.0/8.0
 
 func _ready():
 	var sound_file = FileAccess.open("res://song.raw", FileAccess.WRITE)
@@ -26,8 +27,6 @@ func _ready():
 	var wavetable_track_images: Array[Image]
 	for t in wavetable_tracks:
 		wavetable_track_images.append(t.get_image())
-	
-	var seconds_in_a_pixel := 1.0/8.0
 	
 	# get length of slice
 	var ray_start := Vector3(offset.x, offset.y, 0.5)
